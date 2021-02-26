@@ -30,4 +30,8 @@ server.initModule(name); // connects the module. You can delete unnecessary modu
 ## modules for node.js
 ```js
 server.require(path); // the same require but in grakkit.
+server.function((data1,data2)=>{ // allows you to run functions in grakkit passing arguments
+console.log('data1:',data1)
+console.log('data2:',data2)
+},123,456)
 ```
