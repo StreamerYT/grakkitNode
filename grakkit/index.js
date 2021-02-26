@@ -12,7 +12,7 @@ server._emit = function (name,...args){
     if(server._events[name])server._events[name].forEach(f=>f(...args))
 }
 server.emit = function (name,...args){
-    server.eval(`server._emit('${name}',JSON.parse('${JSON.stringify(args)}'))`)
+    server.eval(`server._emit('${name}',JSON.parse(\`${JSON.stringify(args)}\`))`)
     if(server._events[name])server._events[name].forEach(f=>f(...args))
 }
 
