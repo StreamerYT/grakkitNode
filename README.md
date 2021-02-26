@@ -12,7 +12,7 @@ let server = require('./grakkit');
 ```js
 server.on(event,function);  // own EventEmitter for server compatibility.
 server.emit(name,...args);  // activates immediately on grakkit and node.js. no matter where it was launched.
-server._emit(name,...args); // required for events.
+server._emit(name,args); // required for events.
 ```
 
 ## api for grakkit only
