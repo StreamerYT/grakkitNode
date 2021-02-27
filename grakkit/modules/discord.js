@@ -4,7 +4,6 @@ let settings
 
 module.exports = s=>{
     settings=s
-    s.chatregex2=s.chatregex2.split("username").map(t=>t.includes('text')?t.split('text'):t)
     server.discord.once('ready',()=>{
         if(settings.console){
             server.discord.on('message',(msg)=>{
@@ -25,18 +24,17 @@ module.exports = s=>{
             }
             setInterval(()=>send(),5000)
         }
-        if(settings.chat&&settings.chatregex1&&settings.chatregex2&&settings.chatsend){
-            console.log(settings.chatregex2)
+        if(settings.chat&&settings.chattest&&settings.chatreplace&&settings.chatsend){
             server.discord.on("message",(msg)=>{
                 if(msg.author.bot) return 0;
                 if(msg.channel.id!=settings.chat) return 0;
                 server.jar.stdin.write(`tellraw @a {"text":"${settings.chatsend.replace('username',msg.author.username).replace('text',msg.content.replace('"','\\"'))}"}\n`)
             })
+            let cr = chatreplace.split("username").map(t=>t.includes('text')?t.split('text'):t)
             server.on('console',msg=>{
-                if(!!settings.chatregex1.exec(msg)){
-                    msg=msg.split(settings.chatregex2[0])[1]
-                    console.log(msg)
-                    msg=msg.split(settings.chatregex2[1][0])
+                if(!!settings.chattest.exec(msg)){
+                    msg=msg.split(cr[0])[1]
+                    msg=msg.split(cr[1][0])
                     server.discord.channels.cache.get(settings.chat).send(`**${msg.join("**: ")}`)
                 }
             })
