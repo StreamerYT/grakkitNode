@@ -37,11 +37,15 @@ function log(data){
     }
 }
 
-let jar = spawn('java',`-jar ${fs.readdirSync('./server').find(f=>f.endsWith('.jar'))}`.split(' '),{cwd:"./server"})
-jar.on('close',c=>process.exit(c));
-jar.stdout.on('data',log);
-jar.stderr.on('data',log);
-process.stdin.on('data',d=>jar.stdin.write(d))
+let jar = {stdin:{write:()=>{throw Error("You haven't started the server yet!")}}}
+
+server.start = ()=>{
+    jar = spawn('java',`-jar ${fs.readdirSync('./server').find(f=>f.endsWith('.jar'))}`.split(' '),{cwd:"./server"})
+    jar.on('close',c=>process.exit(c));
+    jar.stdout.on('data',log);
+    jar.stderr.on('data',log);
+    process.stdin.on('data',d=>jar.stdin.write(d))
+}
 
 
 
