@@ -11,7 +11,7 @@ module.exports = s=>{
                 if(msg.channel.id!=settings.console) return 0;
                 let cmd = msg.content.split(" ")[0].toLowerCase()
                 if(cmd=='eval'||cmd=='grakkit:eval') return msg.reply("It is forbidden to use eval so that it is not possible to hack the server through discord")
-                server.jar.stdin.write(msg.content+'\n')
+                server.command(msg.content)
                 setTimeout(()=>send(),250)
             })
             settings._dconsole=[]
@@ -24,13 +24,13 @@ module.exports = s=>{
             }
             setInterval(()=>send(),5000)
         }
-        if(settings.chat&&settings.chattest&&settings.chatreplace&&settings.chatsend){
+        if(settings.chat&&settings.chattest&&settings.chatreplace){
             server.discord.on("message",(msg)=>{
                 if(msg.author.bot) return 0;
                 if(msg.channel.id!=settings.chat) return 0;
-                server.jar.stdin.write(`tellraw @a {"text":"${settings.chatsend.replace('username',msg.author.username).replace('text',msg.content.replace('"','\\"'))}"}\n`)
+                server.command(`tellraw @a {"text":"${settings.chatreplace.replace('username',msg.author.username).replace('text',msg.content.replace('"','\\"'))}"}`)
             })
-            let cr = chatreplace.split("username").map(t=>t.includes('text')?t.split('text'):t)
+            let cr = settings.chatreplace.split("username").map(t=>t.includes('text')?t.split('text'):t)
             server.on('console',msg=>{
                 if(!!settings.chattest.exec(msg)){
                     msg=msg.split(cr[0])[1]
