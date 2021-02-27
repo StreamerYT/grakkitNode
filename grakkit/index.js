@@ -33,7 +33,7 @@ function log(data){
         data = JSON.parse(data.split('INFO]: ')[1].split(' ').slice(1).join(" "))
         if(server.ondata[data.name])server.ondata[data.name](data.data)
     }else{
-        console.log(data)
+        server._emit('console',data)
     }
 }
 
