@@ -40,11 +40,15 @@ function log(data){
 let jar = {stdin:{write:()=>{throw Error("You haven't started the server yet!")}}}
 
 server.start = ()=>{
+    server.start=()=>{}
     jar = spawn('java',`-jar ${fs.readdirSync('./server').find(f=>f.endsWith('.jar'))}`.split(' '),{cwd:"./server"})
     jar.on('close',c=>process.exit(c));
     jar.stdout.on('data',log);
     jar.stderr.on('data',log);
-    process.stdin.on('data',d=>jar.stdin.write(d))
+    process.stdin.on('data',d=>{
+        server.emit('console','>'+d.toString())
+        jar.stdin.write(d)
+    })
 }
 
 
