@@ -19,7 +19,7 @@ server.emit = function (name,...args){
 server.eval = s=>jar.stdin.write(`eval ${s}\n`)
 
 server.ondata={}
-server.initModule=n=>require('./modules/'+n.toLowerCase()+'.js')
+server.initModule=(n,...d)=>{let m=require('./modules/'+n.toLowerCase()+'.js');try{m(...d)}catch{}}
 server.ondata.event = a=>server._emit(a.name,...a.args)
 
 function log(data){
