@@ -11,6 +11,7 @@ function globalFunctions(server){
 }
 
 if(node){
+    global.fs = require('fs')
     global.path = require('path')
     let {spawn} = require('child_process')
     function log(server,data){data=data.toString()
@@ -60,7 +61,7 @@ if(node){
             if(server._ready){
                 server.execute('stop')
             }else{
-                console.log("You haven't started the server yet! But I still try to turn it off.")
+                console.log("But I still try to turn it off.")
                 if(server.jar==offlinejar){
                     console.warn(new Error("You haven't started the server yet!"))
                 }else{
