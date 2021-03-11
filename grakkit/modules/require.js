@@ -6,7 +6,7 @@ module.exports = function (server){
             if(autoRequireOnRestart) return server.on('ready',()=>r())
             delete r
         }else{
-            server[autoRequireOnRestart?'on':'once']('ready',()=>{r();if(!autoRequireOnRestart)delete r;})
+            server[autoRequireOnRestart?'on':'once']('ready',()=>{r();if(!autoRequireOnRestart)delete r})
         }
     }
 }
