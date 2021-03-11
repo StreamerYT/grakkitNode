@@ -1,1 +1,1 @@
-require('../../../grakkit/grakkit.js')
+require('../../../grakkit/index.js')
