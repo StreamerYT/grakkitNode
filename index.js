@@ -79,9 +79,9 @@ if(node){
         _send:(n,d)=>console.log(`_grakkit@node_ ${JSON.stringify({n,d})}`)
     }
     globalFunctions(global.server)
-    let b = Java.type('org.bukkit.Bukkit')
-    let g = b.getPluginManager().getPlugin('grakkit');
-    let c = b.getConsoleSender()
+    global.Bukkit = Java.type('org.bukkit.Bukkit')
+    let g = Bukkit.getPluginManager().getPlugin('grakkit');
+    let c = Bukkit.getConsoleSender()
     g.register(g.getName(),'eval',[],'0','0',(s,n,a)=>s==c?eval([...a].join(' ')):0,s=>0)
     server.emit('ready')
 }
